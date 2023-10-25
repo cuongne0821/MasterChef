@@ -2,14 +2,18 @@ package com.example.masterchef;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.masterchef.My_Adapter;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
+import androidx.appcompat.widget.SearchView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,5 +42,34 @@ public class Home_Fragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         return view;
+    }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.search, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        // Xử lý sự kiện tìm kiếm
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Xử lý khi người dùng nhấn Enter hoặc nút tìm kiếm
+                // Thực hiện tìm kiếm dữ liệu ứng với query
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Xử lý khi người dùng thay đổi nội dung của ô tìm kiếm
+                // Cập nhật danh sách hiển thị dựa trên newText
+                return true;
+            }
+        });
     }
 }
